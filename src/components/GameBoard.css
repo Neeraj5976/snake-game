@@ -1,0 +1,49 @@
+.game-board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2a2a2a;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #333;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.grid-cell {
+  width: 20px;
+  height: 20px;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+}
+
+.snake {
+  background-color: #4CAF50;
+  border: 1px solid #45a049;
+}
+
+.snake-head {
+  background-color: #2E7D32;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.apple {
+  background-color: #f44336;
+  border: 1px solid #d32f2f;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
