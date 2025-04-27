@@ -1,30 +1,32 @@
 import React from 'react';
 import './Instructions.css';
 
-function Instructions() {
+const Instructions = () => {
   return (
     <div className="instructions-container">
-      <h3>How to Play</h3>
-      <p>Guide the snake to eat the apples and grow longer. Avoid hitting the walls or yourself!</p>
+      <h2>How to Play</h2>
+      <p>Control the snake to eat the red apples and grow longer. Avoid colliding with the walls or the snake's own body. Each apple eaten increases your score, and the game speed will increase periodically.</p>
+      <h3>Controls:</h3>
       <div className="controls">
-        <h4>Controls:</h4>
-        <div className="control-keys">
-          <div className="key-row">
-            <kbd>↑</kbd> or <kbd>W</kbd> - Move Up
-          </div>
-          <div className="key-row">
-            <kbd>↓</kbd> or <kbd>S</kbd> - Move Down
-          </div>
-          <div className="key-row">
-            <kbd>←</kbd> or <kbd>A</kbd> - Move Left
-          </div>
-          <div className="key-row">
-            <kbd>→</kbd> or <kbd>D</kbd> - Move Right
-          </div>
+        <div className="key-row">
+          <span>Up:</span>
+          <span className="key">↑</span> or <span className="key">W</span>
+        </div>
+        <div className="key-row">
+          <span>Down:</span>
+          <span className="key">↓</span> or <span className="key">S</span>
+        </div>
+        <div className="key-row">
+          <span>Left:</span>
+          <span className="key">←</span> or <span className="key">A</span>
+        </div>
+        <div className="key-row">
+          <span>Right:</span>
+          <span className="key">→</span> or <span className="key">D</span>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Instructions;

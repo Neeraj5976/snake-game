@@ -1,30 +1,68 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './GameBoard.css';
 
 const GRID_SIZE = 20;
 const INITIAL_SNAKE = [{ x: 10, y: 10 }];
 const INITIAL_SPEED = 400;
 
-function GameBoard({ onGameOver }) {
+const GameBoard = ({ onGameOver, setScore: setAppScore }) => {
   const [snake, setSnake] = useState(INITIAL_SNAKE);
-  const [apple, setApple] = useState({ x: 5, y: 5 });
+  const [apple, setApple] = useState(generateRandomApple(INITIAL_SNAKE));
   const [direction, setDirection] = useState('RIGHT');
   const [score, setScore] = useState(0);
   const [speed, setSpeed] = useState(INITIAL_SPEED);
+  const gameInterval = useRef(null);
 
-  const generateApple = useCallback(() => {
-    const newApple = {
-      x: Math.floor(Math.random() * GRID_SIZE),
-      y: Math.floor(Math.random() * GRID_SIZE)
-    };
-    
-    if (snake.some(segment => segment.x === newApple.x && segment.y === newApple.y)) {
-      return generateApple();
-    }
+  function generateRandomApple(currentSnake) {
+    let newApple;
+    do {
+      newApple = {
+        x: Math.floor(Math.random() * GRID_SIZE),
+        y: Math.floor(Math.random() * GRID_SIZE),
+      };
+    } while (currentSnake.some(segment => segment.x === newApple.x && segment.y === newApple.y));
     return newApple;
-  }, [snake]);
+  }
 
-  const moveSnake = useCallback(() => {
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      switch (event.key) {
+        case 'ArrowUp':
+        case 'w':
+          if (direction !== 'DOWN') setDirection('UP');
+          break;
+        case 'ArrowDown':
+        case 's':
+          if (direction !== 'UP') setDirection('DOWN');
+          break;
+        case 'ArrowLeft':
+        case 'a':
+          if (direction !== 'RIGHT') setDirection('LEFT');
+          break;
+        case 'ArrowRight':
+        case 'd':
+          if (direction !== 'LEFT') setDirection('RIGHT');
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [direction]);
+
+  useEffect(() => {
+    clearInterval(gameInterval.current);
+    gameInterval.current = setInterval(() => {
+      moveSnake();
+    }, speed);
+
+    return () => clearInterval(gameInterval.current);
+  }, [snake, direction, speed, moveSnake]); // Include moveSnake in the dependency array
+
+  const moveSnake = () => {
     const head = { ...snake[0] };
     switch (direction) {
       case 'UP':
@@ -39,77 +77,55 @@ function GameBoard({ onGameOver }) {
       case 'RIGHT':
         head.x += 1;
         break;
+      default:
+        break;
     }
 
-    // Check for collisions
-    if (
-      head.x < 0 || head.x >= GRID_SIZE ||
-      head.y < 0 || head.y >= GRID_SIZE ||
-      snake.some(segment => segment.x === head.x && segment.y === head.y)
-    ) {
+    if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE || checkCollision(head)) {
+      clearInterval(gameInterval.current);
       onGameOver(score);
       return;
     }
 
-    const newSnake = [head];
-    if (head.x === apple.x && head.y === apple.y) {
-      setScore(prevScore => {
-        const newScore = prevScore + 1;
-        if (newScore % 5 === 0) {
-          setSpeed(prevSpeed => Math.max(prevSpeed - 50, 100));
-        }
-        return newScore;
-      });
-      newSnake.push(...snake);
-      setApple(generateApple());
-    } else {
-      newSnake.push(...snake.slice(0, -1));
-    }
-
+    const newSnake = [head, ...snake.slice(0, -1)];
     setSnake(newSnake);
-  }, [snake, direction, apple, score, onGameOver, generateApple]);
 
-  useEffect(() => {
-    const handleKeyPress = (e) => {
-      const key = e.key.toUpperCase();
-      if (key === 'W' || key === 'ARROWUP') {
-        if (direction !== 'DOWN') setDirection('UP');
-      } else if (key === 'S' || key === 'ARROWDOWN') {
-        if (direction !== 'UP') setDirection('DOWN');
-      } else if (key === 'A' || key === 'ARROWLEFT') {
-        if (direction !== 'RIGHT') setDirection('LEFT');
-      } else if (key === 'D' || key === 'ARROWRIGHT') {
-        if (direction !== 'LEFT') setDirection('RIGHT');
+    if (head.x === apple.x && head.y === apple.y) {
+      setApple(generateRandomApple(newSnake));
+      setScore((prevScore) => prevScore + 1);
+      setAppScore((prevScore) => prevScore + 1);
+      setSnake([...newSnake, { ...snake[snake.length - 1] }]);
+      if ((score + 1) % 5 === 0 && speed > 100) {
+        setSpeed((prevSpeed) => prevSpeed - 50);
       }
-    };
+    }
+  };
 
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [direction]);
+  const checkCollision = (head) => {
+    return snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y);
+  };
 
-  useEffect(() => {
-    const gameInterval = setInterval(moveSnake, speed);
-    return () => clearInterval(gameInterval);
-  }, [moveSnake, speed]);
+  const grid = [];
+  for (let y = 0; y < GRID_SIZE; y++) {
+    const row = [];
+    for (let x = 0; x < GRID_SIZE; x++) {
+      let cellClass = 'cell';
+      if (snake.some(segment => segment.x === x && segment.y === y)) {
+        cellClass += ' snake-segment';
+      }
+      if (apple.x === x && apple.y === y) {
+        cellClass += ' apple';
+      }
+      row.push(<div key={`${x}-${y}`} className={cellClass} />);
+    }
+    grid.push(<div key={y} className="row">{row}</div>);
+  }
 
   return (
     <div className="game-board">
-      <div className="grid">
-        {Array(GRID_SIZE).fill().map((_, y) => (
-          <div key={y} className="grid-row">
-            {Array(GRID_SIZE).fill().map((_, x) => (
-              <div
-                key={`${x}-${y}`}
-                className={`grid-cell ${
-                  snake.some(segment => segment.x === x && segment.y === y) ? 'snake' : ''
-                } ${apple.x === x && apple.y === y ? 'apple' : ''}`}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
+      <div className="grid">{grid}</div>
     </div>
   );
-}
+};
 
 export default GameBoard;

@@ -1,48 +1,46 @@
 .instructions-container {
-  background-color: #2a2a2a;
-  padding: 20px;
-  border-radius: 8px;
-  color: white;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.instructions-container h3 {
-  color: #4CAF50;
-  margin-bottom: 10px;
-}
-
-.instructions-container p {
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-.controls {
-  margin-top: 20px;
-}
-
-.controls h4 {
-  color: #4CAF50;
-  margin-bottom: 10px;
-}
-
-.control-keys {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.key-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-kbd {
-  background-color: #333;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 14px;
-  color: #4CAF50;
-}
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    max-width: 600px;
+    margin: 20px auto 0;
+  }
+  
+  .instructions-container h2 {
+    color: #4CAF50;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  
+  .instructions-container h3 {
+    color: #4CAF50;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .instructions-container p {
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .key-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .key {
+    background-color: #333;
+    color: #4CAF50;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 14px;
+  }

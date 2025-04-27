@@ -1,30 +1,19 @@
-* {
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-body {
   background-color: black;
   font-family: Arial, sans-serif;
+  color: white;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   min-height: 100vh;
   background-color: #1a1a1a;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-
-.item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
 }
 
 .score {
