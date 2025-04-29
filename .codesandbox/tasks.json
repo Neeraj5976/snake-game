@@ -9,6 +9,10 @@
 
   // These tasks can be run from CodeSandbox. Running one will open a log in the app.
   "tasks": {
+    "e2e_test": {
+      "name": "e2e_test",
+      "command": "./run.sh"
+    },
     "dev": {
       "name": "dev",
       "command": "npm run dev",
@@ -25,10 +29,6 @@
     "preview": {
       "name": "preview",
       "command": "npm run preview"
-    },
-    "cypress:run": {
-      "name": "e2e_test",
-      "command": "./run.sh"
     }
   }
 }
