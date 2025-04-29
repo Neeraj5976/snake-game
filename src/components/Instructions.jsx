@@ -1,32 +1,41 @@
+// ./src/components/Instructions.jsx
 import React from 'react';
 import './Instructions.css';
 
-const Instructions = () => {
+function Instructions() {
   return (
     <div className="instructions-container">
       <h2>How to Play</h2>
-      <p>Control the snake to eat the red apples and grow longer. Avoid colliding with the walls or the snake's own body. Each apple eaten increases your score, and the game speed will increase periodically.</p>
-      <h3>Controls:</h3>
+      <p>Control the snake to eat the red apples. Each apple eaten will make the snake grow longer and increase your score. Be careful not to run into the walls or collide with your own tail!</p>
       <div className="controls">
+        <h3>Controls:</h3>
         <div className="key-row">
           <span>Up:</span>
-          <span className="key">↑</span> or <span className="key">W</span>
+          <div className="key">↑</div>
+          <span>or</span>
+          <div className="key">W</div>
         </div>
         <div className="key-row">
           <span>Down:</span>
-          <span className="key">↓</span> or <span className="key">S</span>
+          <div className="key">↓</div>
+          <span>or</span>
+          <div className="key">S</div>
         </div>
         <div className="key-row">
           <span>Left:</span>
-          <span className="key">←</span> or <span className="key">A</span>
+          <div className="key">←</div>
+          <span>or</span>
+          <div className="key">A</div>
         </div>
         <div className="key-row">
           <span>Right:</span>
-          <span className="key">→</span> or <span className="key">D</span>
+          <div className="key">→</div>
+          <span>or</span>
+          <div className="key">D</div>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default Instructions;

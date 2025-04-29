@@ -1,41 +1,45 @@
+/* ./src/components/GameBoard.css */
 .game-board {
     display: flex;
     justify-content: center;
-    background-color: #2a2a2a;
+    align-items: center;
     padding: 20px;
+    background-color: #2a2a2a;
     border-radius: 8px;
-  }
-  
-  .grid {
+}
+
+.grid {
     display: flex;
     flex-direction: column;
     border: 2px solid #333;
-  }
-  
-  .row {
+    background-color: #1a1a1a;
+}
+
+.row {
     display: flex;
-  }
-  
-  .cell {
+}
+
+.cell {
     width: 20px;
     height: 20px;
     background-color: #1a1a1a;
     border: 1px solid #333;
-  }
-  
-  .snake-segment {
+    box-sizing: border-box;
+}
+
+.snake-segment {
     background-color: #4CAF50;
     border: 1px solid #45a049;
-  }
-  
-  .apple {
+}
+
+.apple {
     background-color: #f44336;
     border: 1px solid #d32f2f;
     border-radius: 50%;
     animation: pulse 1s infinite alternate;
-  }
-  
-  @keyframes pulse {
+}
+
+@keyframes pulse {
     0% {
       transform: scale(1);
     }

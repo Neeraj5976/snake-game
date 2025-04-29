@@ -1,3 +1,4 @@
+// ./src/App.jsx
 import React, { useState } from 'react';
 import GameBoard from './components/GameBoard';
 import GameOver from './components/GameOver';

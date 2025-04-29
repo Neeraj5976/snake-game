@@ -1,3 +1,4 @@
+/* ./src/components/GameOver.css */
 .game-over {
     text-align: center;
     padding: 20px;
@@ -18,7 +19,7 @@
     color: #4CAF50;
   }
   
-  .restart-button {
+  .game-over button {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -28,6 +29,6 @@
     cursor: pointer;
   }
   
-  .restart-button:hover {
+  .game-over button:hover {
     background-color: #45a049;
   }
